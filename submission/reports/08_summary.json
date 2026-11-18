@@ -1,0 +1,18 @@
+{
+  "verdict": {
+    "decision": "Release",
+    "n_errors": 0,
+    "n_warn_images": 15,
+    "n_images": 205,
+    "warn_ratio": 0.0732,
+    "reasons": [
+      "0 lỗi bắt buộc; 15/205 ảnh còn cảnh báo (7.32%) < ngưỡng 10%"
+    ]
+  },
+  "reviewed": 80,
+  "budget": 80,
+  "seconds": 6.8,
+  "exported": "D:\\AI20KK\\K5-L23-Day09-BuiCongDat-2A202603068-AutoQC-Pipeline-Lab\\submission\\export\\clean_v1",
+  "config_sha1": "80e237c70d2d30f4ce908c54cc963336874d762e",
+  "review_sim_sha1": "7988ca22827f780a7043a2300490e679a1697154"
+}

@@ -40,5 +40,76 @@ from ..model_cache import get_preds  # noqa: F401
 
 
 def run(ds, cfg, preds=None):
-    # TODO
-    raise NotImplementedError("check second_opinion chưa làm")
+    so = cfg["second_opinion"]
+    conf_min = so["conf"]
+    min_area_px = so["min_area_px"]
+    fp_conf = so["fp_conf"]
+    iou_missing = so["iou_missing"]
+    iou_match = so["iou_match"]
+    iou_loose = so["iou_loose"]
+    n_classes = len(ds.classes)
+
+    if preds is None:
+        preds = get_preds(ds, cfg, "checker")
+
+    issues = []
+    for img_path in ds.image_files():
+        stem = img_path.stem
+        if stem not in preds:
+            continue
+        raw_lines = ds.read_label_lines(stem)
+        if raw_lines is None:
+            continue
+        size = ds.image_size(stem)
+        if size is None:
+            continue
+        W, H = size
+
+        labels = []                       # [(line_no, cls, box)]
+        for line_no, text in raw_lines:
+            try:
+                cls, cx, cy, w, h = parse_yolo_line(text)
+            except ValueError:
+                continue
+            if not 0 <= cls < n_classes:
+                continue
+            labels.append((line_no, cls, (cx, cy, w, h)))
+
+        rows = preds[stem] or []
+        # dự đoán đủ tin cậy + đủ lớn: dùng cho MISSING / LOOSE / WRONG_CLASS
+        strong = []
+        for r in rows:
+            p_cls, p_conf, cx, cy, w, h = r[0], r[1], r[2], r[3], r[4], r[5]
+            if p_conf < conf_min:
+                continue
+            if (w * W) * (h * H) < min_area_px:
+                continue
+            strong.append((int(p_cls), (cx, cy, w, h), float(p_conf)))
+
+        for p_cls, box, p_conf in strong:
+            cands = [(l_cls, iou_xywh(box, l_box)) for _, l_cls, l_box in labels
+                     if iou_xywh(box, l_box) >= iou_missing]
+            if not cands:
+                issues.append(Issue("second_opinion", WARN, "POSSIBLE_MISSING", stem,
+                                    "model thấy vật mà nhãn không có box", extra={"conf": p_conf}))
+                continue
+            same = [iou for l_cls, iou in cands if l_cls == p_cls]
+            if same:
+                best_same = max(same)
+                if best_same < iou_loose:
+                    issues.append(Issue("second_opinion", WARN, "POSSIBLE_LOOSE_BOX", stem,
+                                        "đúng vật nhưng box lỏng/lệch", extra={"iou": round(best_same, 4)}))
+                continue
+            best_other = max(iou for _, iou in cands)
+            if best_other >= iou_match:
+                issues.append(Issue("second_opinion", WARN, "POSSIBLE_WRONG_CLASS", stem,
+                                    "model đoán lớp khác cho cùng vật", extra={"iou": round(best_other, 4)}))
+
+        # dự đoán yếu hơn (>= fp_conf) vẫn đủ để bác bỏ FALSE_POS
+        weak_boxes = [(r[2], r[3], r[4], r[5]) for r in rows if r[1] >= fp_conf]
+        for line_no, _, l_box in labels:
+            if all(iou_xywh(l_box, p_box) < iou_missing for p_box in weak_boxes):
+                issues.append(Issue("second_opinion", WARN, "POSSIBLE_FALSE_POS", stem,
+                                    "box nhãn không khớp dự đoán nào của model", line_no))
+
+    return issues

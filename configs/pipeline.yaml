@@ -10,11 +10,11 @@ intake:
   reference_dirs: [data/test/images, data/gold_val/images]     # kho cũ: ảnh trùng với đây = rò rỉ
 
 duplicates:
-  phash_dist: 2            # <-- CALIBRATE  (khoảng cách Hamming tối đa để coi là "trùng gần đúng")
+  phash_dist: 12           # <-- CALIBRATE  (khoảng cách Hamming tối đa để coi là "trùng gần đúng")
 
 label_format:
   overflow_tol: 0.002      # box tràn quá mức này mới báo; đơn vị: tỉ lệ ảnh (cố định)
-  min_box_px: 6           # cạnh ngắn (px) < ngưỡng => cảnh báo BOX_TINY (quy tắc dự án, KHÔNG có đáp án để calibrate)
+  min_box_px: 12          # cạnh ngắn (px) < ngưỡng => cảnh báo BOX_TINY (quy tắc dự án, KHÔNG có đáp án để calibrate)
   max_box_frac: 0.95
   dup_box_iou: 0.9
 

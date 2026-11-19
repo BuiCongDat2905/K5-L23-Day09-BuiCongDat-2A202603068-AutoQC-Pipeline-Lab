@@ -1,6 +1,6 @@
 {
   "name": "clean_v1",
-  "n_images": 205,
+  "n_images": 202,
   "classes": [
     "car",
     "person",
@@ -10,11 +10,11 @@
   "decision": {
     "decision": "Release",
     "n_errors": 0,
-    "n_warn_images": 15,
-    "n_images": 205,
-    "warn_ratio": 0.0732,
+    "n_warn_images": 20,
+    "n_images": 202,
+    "warn_ratio": 0.099,
     "reasons": [
-      "0 lỗi bắt buộc; 15/205 ảnh còn cảnh báo (7.32%) < ngưỡng 10%"
+      "0 lỗi bắt buộc; 20/202 ảnh còn cảnh báo (9.90%) < ngưỡng 10%"
     ]
   },
   "config": {
@@ -39,11 +39,11 @@
       ]
     },
     "duplicates": {
-      "phash_dist": 2
+      "phash_dist": 12
     },
     "label_format": {
       "overflow_tol": 0.002,
-      "min_box_px": 6,
+      "min_box_px": 12,
       "max_box_frac": 0.95,
       "dup_box_iou": 0.9
     },
@@ -176,7 +176,6 @@
     "img_0098.png",
     "img_0099.jpg",
     "img_0100.jpg",
-    "img_0101.jpg",
     "img_0103.jpg",
     "img_0104.jpg",
     "img_0105.jpg",
@@ -251,7 +250,6 @@
     "img_0183.jpg",
     "img_0184.jpg",
     "img_0185.jpg",
-    "img_0186.jpg",
     "img_0187.jpg",
     "img_0188.jpg",
     "img_0189.jpg",
@@ -284,7 +282,6 @@
     "img_0218.jpg",
     "img_0219.jpg",
     "img_0220.jpg",
-    "img_0223.jpg",
     "img_0224.jpg"
   ],
   "label_sha1": {
@@ -383,7 +380,6 @@
     "img_0098.txt": "0ca6c7d14b8e",
     "img_0099.txt": "65c8de82bd71",
     "img_0100.txt": "1d892147d4d5",
-    "img_0101.txt": "7955a7029b9a",
     "img_0103.txt": "1fb1e60d961a",
     "img_0104.txt": "d441bbbf0a32",
     "img_0105.txt": "0598590471ab",
@@ -458,7 +454,6 @@
     "img_0183.txt": "34daac767999",
     "img_0184.txt": "da39a3ee5e6b",
     "img_0185.txt": "39e297758310",
-    "img_0186.txt": "d5e4fea90b3b",
     "img_0187.txt": "dd17739e8f75",
     "img_0188.txt": "a51841c64e1e",
     "img_0189.txt": "dd9f9e1d9946",
@@ -491,7 +486,6 @@
     "img_0218.txt": "b437c03a237c",
     "img_0219.txt": "3e32e657806e",
     "img_0220.txt": "a0c157207486",
-    "img_0223.txt": "e9bbdb937398",
     "img_0224.txt": "064674881176"
   },
   "note": "Ảnh lấy từ data/raw/images theo danh sách `images`; dùng scripts/materialize_dataset.py để dựng thư mục train."

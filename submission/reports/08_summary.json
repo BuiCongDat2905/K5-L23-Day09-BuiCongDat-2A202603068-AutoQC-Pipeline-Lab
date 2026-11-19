@@ -2,17 +2,17 @@
   "verdict": {
     "decision": "Release",
     "n_errors": 0,
-    "n_warn_images": 15,
-    "n_images": 205,
-    "warn_ratio": 0.0732,
+    "n_warn_images": 20,
+    "n_images": 202,
+    "warn_ratio": 0.099,
     "reasons": [
-      "0 lỗi bắt buộc; 15/205 ảnh còn cảnh báo (7.32%) < ngưỡng 10%"
+      "0 lỗi bắt buộc; 20/202 ảnh còn cảnh báo (9.90%) < ngưỡng 10%"
     ]
   },
   "reviewed": 80,
   "budget": 80,
-  "seconds": 6.8,
+  "seconds": 7.0,
   "exported": "D:\\AI20KK\\K5-L23-Day09-BuiCongDat-2A202603068-AutoQC-Pipeline-Lab\\submission\\export\\clean_v1",
-  "config_sha1": "80e237c70d2d30f4ce908c54cc963336874d762e",
+  "config_sha1": "02968e9a7d16ef2e087620e71c98fa3d2abc6182",
   "review_sim_sha1": "7988ca22827f780a7043a2300490e679a1697154"
 }

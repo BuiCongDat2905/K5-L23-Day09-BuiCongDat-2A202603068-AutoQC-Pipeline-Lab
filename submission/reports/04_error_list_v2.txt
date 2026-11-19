@@ -1,7 +1,7 @@
 # Danh sách lỗi — SAU sửa tự động (v2)
-ảnh đã quét: 205
+ảnh đã quét: 202
 
-label_format -> 3 dòng
+label_format -> 17 dòng
 missing_labels -> 21 dòng
 second_opinion -> 82 dòng
 
@@ -11,9 +11,23 @@ second_opinion -> 82 dòng
 [ERROR] MISSING_LABEL_FILE   img_0135  ảnh không có file nhãn
 [ERROR] MISSING_LABEL_FILE   img_0170  ảnh không có file nhãn
 [ERROR] MISSING_LABEL_FILE   img_0219  ảnh không có file nhãn
+[WARN ] BOX_ASPECT           img_0021.txt:5  tỉ lệ khung 6.8 > 6.0
+[WARN ] BOX_ASPECT           img_0030.txt:9  tỉ lệ khung 8.6 > 6.0
+[WARN ] BOX_ASPECT           img_0042.txt:5  tỉ lệ khung 9.6 > 6.0
+[WARN ] BOX_ASPECT           img_0062.txt:1  tỉ lệ khung 6.6 > 6.0
+[WARN ] BOX_ASPECT           img_0068.txt:8  tỉ lệ khung 7.4 > 6.0
+[WARN ] BOX_ASPECT           img_0084.txt:7  tỉ lệ khung 6.8 > 6.0
+[WARN ] BOX_ASPECT           img_0155.txt:2  tỉ lệ khung 9.8 > 6.0
 [WARN ] BOX_HUGE             img_0018.txt:1  diện tích 0.970 > 0.95 tỉ lệ ảnh
 [WARN ] BOX_HUGE             img_0128.txt:1  diện tích 0.988 > 0.95 tỉ lệ ảnh
 [WARN ] BOX_HUGE             img_0196.txt:1  diện tích 0.984 > 0.95 tỉ lệ ảnh
+[WARN ] BOX_TINY             img_0026.txt:6  cạnh ngắn 11.4px < 12px
+[WARN ] BOX_TINY             img_0030.txt:9  cạnh ngắn 9.8px < 12px
+[WARN ] BOX_TINY             img_0051.txt:5  cạnh ngắn 8.9px < 12px
+[WARN ] BOX_TINY             img_0069.txt:2  cạnh ngắn 11.2px < 12px
+[WARN ] BOX_TINY             img_0161.txt:2  cạnh ngắn 10.3px < 12px
+[WARN ] BOX_TINY             img_0161.txt:3  cạnh ngắn 11.4px < 12px
+[WARN ] BOX_TINY             img_0161.txt:4  cạnh ngắn 11.9px < 12px
 [WARN ] EMPTY_LABEL          img_0004  file nhãn rỗng: ảnh nền hay thiếu nhãn?
 [WARN ] EMPTY_LABEL          img_0013  file nhãn rỗng: ảnh nền hay thiếu nhãn?
 [WARN ] EMPTY_LABEL          img_0050  file nhãn rỗng: ảnh nền hay thiếu nhãn?
@@ -114,7 +128,9 @@ second_opinion -> 82 dòng
 
 ## Tổng hợp theo mã
 error MISSING_LABEL_FILE     6
+warn  BOX_ASPECT             7
 warn  BOX_HUGE               3
+warn  BOX_TINY               7
 warn  EMPTY_LABEL            15
 warn  POSSIBLE_FALSE_POS     24
 warn  POSSIBLE_LOOSE_BOX     12

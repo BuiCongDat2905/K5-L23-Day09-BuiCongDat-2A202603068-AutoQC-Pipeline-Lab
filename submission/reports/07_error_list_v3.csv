@@ -6,7 +6,16 @@ missing_labels,warn,EMPTY_LABEL,img_0147,,file nhãn rỗng: ảnh nền hay thi
 missing_labels,warn,EMPTY_LABEL,img_0184,,file nhãn rỗng: ảnh nền hay thiếu nhãn?,
 missing_labels,warn,EMPTY_LABEL,img_0192,,file nhãn rỗng: ảnh nền hay thiếu nhãn?,
 label_format,warn,BOX_HUGE,img_0018,1,diện tích 0.970 > 0.95 tỉ lệ ảnh,
+label_format,warn,BOX_TINY,img_0026,6,cạnh ngắn 11.4px < 12px,
+label_format,warn,BOX_ASPECT,img_0042,5,tỉ lệ khung 9.6 > 6.0,"{""aspect"": 9.58}"
+label_format,warn,BOX_TINY,img_0051,5,cạnh ngắn 8.9px < 12px,
+label_format,warn,BOX_ASPECT,img_0084,7,tỉ lệ khung 6.8 > 6.0,"{""aspect"": 6.85}"
+label_format,warn,BOX_ASPECT,img_0124,6,tỉ lệ khung 9.1 > 6.0,"{""aspect"": 9.11}"
 label_format,warn,BOX_HUGE,img_0128,1,diện tích 0.988 > 0.95 tỉ lệ ảnh,
+label_format,warn,BOX_TINY,img_0161,2,cạnh ngắn 10.3px < 12px,
+label_format,warn,BOX_TINY,img_0161,3,cạnh ngắn 11.4px < 12px,
+label_format,warn,BOX_TINY,img_0161,4,cạnh ngắn 11.9px < 12px,
+label_format,warn,BOX_TINY,img_0183,11,cạnh ngắn 11.8px < 12px,
 label_format,warn,BOX_HUGE,img_0196,1,diện tích 0.984 > 0.95 tỉ lệ ảnh,
 second_opinion,warn,POSSIBLE_FALSE_POS,img_0014,2,box nhãn không khớp dự đoán nào của model,
 second_opinion,warn,POSSIBLE_LOOSE_BOX,img_0021,,đúng vật nhưng box lỏng/lệch,"{""iou"": 0.486}"

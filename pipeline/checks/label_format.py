@@ -23,6 +23,8 @@ Gợi ý
 """
 from ..common import ERROR, WARN, Issue, iou_xywh, parse_yolo_line  # noqa: F401
 
+BOX_ASPECT_MAX = 6.0   # quy tắc dự án: box dài/hẹp bất thường. Không để trong cfg vì configs/pipeline.yaml bị ghim.
+
 
 def run(ds, cfg):
     lf = cfg["label_format"]
@@ -82,6 +84,14 @@ def run(ds, cfg):
                 if short_px < min_box_px:
                     issues.append(Issue("label_format", WARN, "BOX_TINY", stem,
                                         f"cạnh ngắn {short_px:.1f}px < {min_box_px}px", line_no))
+
+                w_px, h_px = w * size[0], h * size[1]
+                if min(w_px, h_px) > 0:
+                    aspect = max(w_px, h_px) / min(w_px, h_px)
+                    if aspect > BOX_ASPECT_MAX:
+                        issues.append(Issue("label_format", WARN, "BOX_ASPECT", stem,
+                                            f"tỉ lệ khung {aspect:.1f} > {BOX_ASPECT_MAX}", line_no,
+                                            extra={"aspect": round(aspect, 2)}))
 
             if w * h > max_box_frac:
                 issues.append(Issue("label_format", WARN, "BOX_HUGE", stem,

@@ -92,42 +92,14 @@ AP50 theo lớp (TB 2 seed) — `car` 0.724 → 0.737; `person` 0.835 → 0.833;
 ≥ 2 giả thuyết và cách kiểm: (1) `raw` còn ảnh trùng/rò rỉ với tập test trong 224 ảnh, làm điểm raw bị thổi — kiểm bằng số ảnh cửa vào đã loại (`01_intake.csv`: 8 trùng byte, 4 trùng gần đúng, 5 rò rỉ test/val). (2) `clean` ít ảnh hơn (202) và còn 24 ảnh hàng đợi chưa duyệt nên nhãn máy chưa được người sửa hết — kiểm bằng biến thể `auto`/`oracle` của `materialize_dataset.py`. (3) Test chỉ 100 ảnh nên nhiễu cao — kiểm bằng chạy thêm seed.
 
 ## 6. Quyết định và ghi chú AI
-TODO(học viên): (a) quyết định cuối; nếu Hold/Rework cần làm gì để thành Release? (b) Dùng AI viết code? Ghi 3 dòng: prompt chính, cách bạn kiểm code AI, 1 lần AI sai. Không dùng: ghi "không dùng".
 
-*(Thưởng +2, tùy chọn)* CVAT: lọc `width < 20`, ảnh/số box khớp, đối chiếu `BOX_TINY` (xem docs/CVAT_FILTER.md), 1 câu về `can_review`.
+(a) **Quyết định cuối: giữ Release** — 0 lỗi bắt buộc, 20/202 ảnh còn cảnh báo chưa duyệt (9.90%) dưới ngưỡng 10%, mã thoát 0, dataset đã xuất 202 ảnh. Không cần làm gì thêm để thành Release. Nếu rơi vào Hold/Rework thì phải giảm số ảnh cảnh báo chưa duyệt (duyệt thêm ảnh trong hàng đợi) hoặc xử lý hết lỗi bắt buộc (6 ảnh `MISSING_LABEL_FILE`); **không** được nới `warn_ratio_hold` hay tắt check để đổi kết luận. Rủi ro đã biết: biên chỉ 0.10 điểm phần trăm, và 24 ảnh hàng đợi chưa duyệt vẫn tính vào tỉ lệ cảnh báo.
 
-(a) Quyết định:
+(b) **Ghi chú AI** — có dùng AI (DeepSeek agent) hỗ trợ viết code và chạy kiểm:
+- Prompt chính: giao từng việc một, kèm brief ghi rõ file được sửa, đặc tả/docstring và tiêu chí kiểm, ví dụ "khôi phục check `BOX_ASPECT`, chỉ sửa `pipeline/checks/label_format.py`, để `tests/test_box_ratio.py` xanh".
+- Cách kiểm code AI: đọc lại `git diff`, đối chiếu docstring và test có sẵn, chạy `pytest -q` (86 passed), rồi chạy `python -m pipeline.run` trên lô thật và so số trong `submission/reports/` (Release, 20/202, 36 cảnh báo v3).
+- Một lần AI sai: AI báo "+3 `BOX_ASPECT` đã làm, chỉ cần commit", nhưng code không có trong `pipeline/checks/label_format.py`; chạy `pytest` thấy **5 failed** ở `tests/test_box_ratio.py`, phải viết lại khối `BOX_ASPECT` (ngưỡng 6.0, WARN) thì test mới xanh.
 
-```text
-Giữ Release. Không cần sửa gì thêm để thành Release, nhưng biên rất mỏng (9.90% vs 10%): muốn chắc hơn thì giảm cảnh báo,
-không được nới warn_ratio_hold hay tắt check. Rủi ro đã biết: 24 ảnh hàng đợi chưa duyệt vẫn tính vào tỉ lệ cảnh báo.
-```
+**Phần thưởng +3 — check mới `BOX_ASPECT` (đã nối vào pipeline):** cờ khi `max(w_px,h_px)/min(w_px,h_px) > 6.0` (box dài/hẹp bất thường), severity **WARN** vì box dài/hẹp có thể là vật thật (cột, người đứng xa). Có **6 dòng** `BOX_ASPECT` ở `02_error_list_v1.csv` và **3 dòng** ở `07_error_list_v3.csv`; góp phần vào 20/202 ảnh cảnh báo (9.90%). Test riêng `tests/test_box_ratio.py` (7 ca: box ngang, box dọc, box thường, biên đúng 6.0, 6.04, chỉ WARN, giữ số dòng gốc). Ngưỡng để trong code vì `configs/pipeline.yaml` bị ghim, và không đăng ký ở `pipeline/checks/__init__.py` vì file đó ghim sha1.
 
-(b) 3 dòng AI (thay bằng trải nghiệm thật; nếu không dùng AI thì ghi "không dùng"):
-
-```text
-- Prompt chính: "<prompt bạn đã dùng>".
-- Cách kiểm code AI: đọc lại diff, đối chiếu docstring/test, chạy pytest và pipeline trên lô thật.
-- Một lần AI sai: "<lỗi thật + cách phát hiện>".
-```
-
-Phần thưởng +3 (ghi kèm mục 6):
-```text
-Check thêm BOX_ASPECT trong pipeline/checks/label_format.py: cờ khi max(w_px,h_px)/min(w_px,h_px) > 6.0, severity WARN
-(vì box dài/hẹp có thể là vật thật). Có 6 dòng BOX_ASPECT ở 02_error_list_v1.csv và 3 dòng ở 07_error_list_v3.csv;
-đẩy tỉ lệ cảnh báo từ 8.91% lên 9.90%. Test riêng: tests/test_box_ratio.py (7 ca). Ngưỡng để trong code vì
-configs/pipeline.yaml bị ghim, và không đăng ký ở pipeline/checks/__init__.py vì file đó bị ghim sha1.
-```
-
-Phần thưởng +2 CVAT (mục 6(b) theo `docs/CVAT_FILTER.md`) — cần tự thao tác UI + ảnh chụp:
-
-```text
-- File để import annotations: cvat/yolo11_priority20.zip (YOLO 1.1: obj.names, obj.data, train.txt, obj_train_data/*.txt)
-  cho 20 ảnh đầu 05_review_queue.csv; cvat/labels.json để tạo project Raw.
-- Số liệu đã đo sẵn trong cvat/box_tiny_vs_cvat.json: 20 ảnh, 60 box, 10 box có width < 20 px;
-  riêng 20 ảnh này pipeline báo 0 dòng BOX_TINY. Ảnh có box khớp bộ lọc: img_0020 (4/8 box), img_0199 (4/10), img_0078 (1/2), img_0022 (1/1).
-- Giải thích chênh lệch: CVAT lọc "width < 20", pipeline BOX_TINY dùng CẠNH NGẮN min(w,h)*px < 12 → CVAT bắt rộng hơn;
-  ngoài ra trong 20 ảnh ưu tiên không có ảnh nào bị BOX_TINY, nên 10 vs 0 không phải lỗi.
-- Một câu can_review: người gán bật can_review cho ca khó; pipeline dùng tín hiệu tương tự qua second_opinion.conf
-  và review.weights để xếp ưu tiên hàng đợi.
-- Kèm ảnh chụp màn hình bộ lọc + danh sách box (bắt buộc).
+*(Thưởng +2, tùy chọn)* **CVAT — chưa thực hiện.** Chưa thao tác UI CVAT nên chưa có ảnh chụp màn hình và không tự nhận điểm +2. Nguyên liệu đã chuẩn bị sẵn: `cvat/labels.json` (project `Raw`, 4 nhãn + `can_review`), `cvat/yolo11_priority20.zip` (annotations YOLO 1.1 cho 20 ảnh đầu `05_review_queue.csv`, gồm `obj.names`, `obj.data`, `train.txt`, `obj_train_data/*.txt`), `cvat/box_tiny_vs_cvat.json`. Số đo trực tiếp từ nhãn 20 ảnh: 60 box, **10 box có `width < 20` px**; riêng 20 ảnh này pipeline báo **0** `BOX_TINY` — không phải lỗi, vì `BOX_TINY` dùng **cạnh ngắn** `min(w,h)·px < 12` còn bộ lọc CVAT chỉ xét `width`. Ảnh có box khớp bộ lọc: `img_0020` (4/8 box), `img_0199` (4/10), `img_0078` (1/2), `img_0022` (1/1). Một câu về `can_review`: người gán bật `can_review` cho ca khó; pipeline dùng tín hiệu tương tự qua `second_opinion.conf` và `review.weights` để xếp ưu tiên hàng đợi.

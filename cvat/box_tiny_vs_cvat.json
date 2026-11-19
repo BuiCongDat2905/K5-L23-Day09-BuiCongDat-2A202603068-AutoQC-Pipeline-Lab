@@ -1,0 +1,131 @@
+{
+  "filter": "width < 20",
+  "images": [
+    {
+      "image": "img_0031",
+      "boxes_total": null,
+      "boxes_width_lt_20": null,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0053",
+      "boxes_total": null,
+      "boxes_width_lt_20": null,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0126",
+      "boxes_total": null,
+      "boxes_width_lt_20": null,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0135",
+      "boxes_total": null,
+      "boxes_width_lt_20": null,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0170",
+      "boxes_total": null,
+      "boxes_width_lt_20": null,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0219",
+      "boxes_total": null,
+      "boxes_width_lt_20": null,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0020",
+      "boxes_total": 8,
+      "boxes_width_lt_20": 4,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0092",
+      "boxes_total": 10,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0099",
+      "boxes_total": 14,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0144",
+      "boxes_total": 1,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0104",
+      "boxes_total": 0,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0050",
+      "boxes_total": 0,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0204",
+      "boxes_total": 1,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0068",
+      "boxes_total": 8,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0078",
+      "boxes_total": 2,
+      "boxes_width_lt_20": 1,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0066",
+      "boxes_total": 2,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0001",
+      "boxes_total": 2,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0022",
+      "boxes_total": 1,
+      "boxes_width_lt_20": 1,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0014",
+      "boxes_total": 1,
+      "boxes_width_lt_20": 0,
+      "box_tiny_pipeline": 0
+    },
+    {
+      "image": "img_0199",
+      "boxes_total": 10,
+      "boxes_width_lt_20": 4,
+      "box_tiny_pipeline": 0
+    }
+  ],
+  "totals": {
+    "images": 20,
+    "boxes_total": 60,
+    "boxes_width_lt_20": 10,
+    "box_tiny_pipeline": 0
+  }
+}
